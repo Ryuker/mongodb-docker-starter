@@ -7,7 +7,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: mongo_admin
       MONGO_INITDB_ROOT_PASSWORD: example_pass
     ports:
-      - 27017:27017
+      - 8080:27017
     volumes:
       - mongodata:/data/db
 
