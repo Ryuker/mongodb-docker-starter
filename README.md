@@ -1,2 +1,2 @@
-# mdb-express-docker-starter
+# mdb-docker-starter
 Starter for an express server connecting to a local mongo database in docker for easy setup
