@@ -1,0 +1,1 @@
+# Local MongoDB CRUD Boilerplate notes
