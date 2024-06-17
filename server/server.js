@@ -19,7 +19,6 @@ const users = require('./routes/users.js');
 
 //////////////
 // db stuff
-
 connectDB()
   .then(() => {
     status.msg = `<h1>Server Running with connection to database</h1>`;
