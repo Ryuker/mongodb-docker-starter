@@ -19,10 +19,10 @@ const connectDB = async () => {
       // const conn = await mongoose.connect(`mongodb://mongo_admin:example_pass@127.0.0.1:8080/`);
 
     console.log(`MongoDB connected: ${conn.connection.host}`.cyan.underline.bold);
-
   } catch(err){
     console.log(err);
     console.log('Connection to mongodb refused');
+    throw new Error();
   }
 };
 

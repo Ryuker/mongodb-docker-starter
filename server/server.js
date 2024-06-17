@@ -16,7 +16,17 @@ const users = require('./routes/users.js');
 
 //////////////
 // db stuff
-connectDB();
+let status = { isConnected: false, msg: `<h1>Server Running, connection to database pending..</h1>`};
+
+connectDB()
+  .then(() => {
+    status.isConnected = true;
+    status.msg = `<h1>Server Running with connection to database</h1>`;
+  })
+  .catch(() => {
+    status.isConnected = false;
+    status.msg = `<h1>Server Running without connection to database</h1>`
+  });
 
 /////////////////
 /// Middleware //
@@ -27,7 +37,11 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // Mount Routers
-app.get('/', (req, res) => res.status(200).send(`<h1>Server Running</h1>`));
+app.get('/', (req, res) => res.status(200).send(status.msg));
+
+// lock routes with status message when database is not connected
+if(!status.isConnected)
+  app.get('/*', (req, res) => res.status(200).send(status.msg));
 
 app.use('/api/users', users);
 
