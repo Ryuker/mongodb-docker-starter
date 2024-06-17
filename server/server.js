@@ -56,3 +56,11 @@ server = app.listen(
     console.log('Server running on port 5000');
   })
 );
+
+// Handle unhandled rejections
+process.on('unhandledRejection', (err, promise) => {
+  console.log(`Error: ${err.message}`.red);
+  
+  // Close server & exit process
+  server.close(() => process.exit(1));
+});
