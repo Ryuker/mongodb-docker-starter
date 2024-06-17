@@ -14,19 +14,12 @@ const UserSchema = new mongoose.Schema({
       'Please add a valid email'
     ]
   },
-  role: {
-    type: String, 
-    enum: ['user', 'publisher'],
-    default: 'user'
-  },
   password: {
     type: String,
     required: [true, 'Please add a password'],
     minlength: 6,
     select: false
   },
-  resetPasswordToken: String,
-  resetPasswordExpire: Date, 
   createdAt: {
     type: Date,
     default: Date.now

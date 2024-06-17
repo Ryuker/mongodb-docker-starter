@@ -27,7 +27,10 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // Mount Routers
-app.use('/', users);
+app.get('/', (req, res) => res.status(200).send(`<h1>Server Running</h1>`));
+
+app.use('/api/users', users);
+
 
 // - Error Handler
 app.use(errorHandler);
