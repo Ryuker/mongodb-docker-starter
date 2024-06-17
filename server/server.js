@@ -9,14 +9,16 @@ const { connectDB, status: dbStatus } = require('./services/dbService');
 // utils
 const ErrorResponse = require('./utils/errorResponse');
 
+//////////////////
+// instance server
 const app = express();
+let status = { isConnected: dbStatus, msg: `<h1>Server Running, connection to database pending..</h1>`};
 
 // Route files
 const users = require('./routes/users.js');
 
 //////////////
 // db stuff
-let status = { isConnected: dbStatus, msg: `<h1>Server Running, connection to database pending..</h1>`};
 
 connectDB()
   .then(() => {
