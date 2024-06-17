@@ -2,7 +2,8 @@ const colors = require('colors');
 const mongoose = require('mongoose');
 
 // Set Up the Database connection
-let URI = "mongodb://localhost:8080/"
+let URI = "mongodb://localhost:8080/";
+const status = { isConnected: 'pending' };
 
 const connectDB = async () => {
   try {
@@ -17,13 +18,17 @@ const connectDB = async () => {
 
       // shorter version
       // const conn = await mongoose.connect(`mongodb://mongo_admin:example_pass@127.0.0.1:8080/`);
+      if (conn.connection.host)
+        status.isConnected = 'connected'; 
 
     console.log(`MongoDB connected: ${conn.connection.host}`.cyan.underline.bold);
   } catch(err){
     console.log(err);
     console.log('Connection to mongodb refused');
+    
+    status.isConnected = 'not connected';
     throw new Error();
   }
 };
 
-module.exports = connectDB;
+module.exports = { connectDB, status };

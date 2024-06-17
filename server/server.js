@@ -4,7 +4,7 @@ const express = require('express');
 // middleware imports
 const asyncHandler = require('./middleware/async');
 const errorHandler = require('./middleware/error');
-const connectDB = require('./services/dbService');
+const { connectDB, status: dbStatus } = require('./services/dbService');
 
 // utils
 const ErrorResponse = require('./utils/errorResponse');
@@ -16,17 +16,15 @@ const users = require('./routes/users.js');
 
 //////////////
 // db stuff
-let status = { isConnected: false, msg: `<h1>Server Running, connection to database pending..</h1>`};
+let status = { isConnected: dbStatus, msg: `<h1>Server Running, connection to database pending..</h1>`};
 
 connectDB()
   .then(() => {
-    status.isConnected = true;
     status.msg = `<h1>Server Running with connection to database</h1>`;
   })
   .catch(() => {
-    status.isConnected = false;
     status.msg = `<h1>Server Running without connection to database</h1>`
-  });
+  }).finally(() => status.isConnected = dbStatus );
 
 /////////////////
 /// Middleware //
@@ -40,7 +38,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => res.status(200).send(status.msg));
 
 // lock routes with status message when database is not connected
-if(!status.isConnected)
+if(dbStatus !== 'connected')
   app.get('/*', (req, res) => res.status(200).send(status.msg));
 
 app.use('/api/users', users);
