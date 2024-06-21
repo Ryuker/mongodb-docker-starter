@@ -1,5 +1,5 @@
 # Express MongoDB CRUD Boilerplate
-Starter for an express server connecting to a local mongo database in docker for easy setup.
+Starter for an express server connecting to a local mongo database in docker for a quick local development setup.
 
 
 **Uses:**
