@@ -1,5 +1,7 @@
 const colors = require('colors');
 const mongoose = require('mongoose');
+const ErrorResponse = require('../utils/errorResponse');
+const asyncHandler = require('../middleware/async');
 
 // Set Up the Database connection
 let URI = "mongodb://localhost:8080/";
@@ -31,4 +33,11 @@ const connectDB = async () => {
   }
 };
 
-module.exports = { connectDB, status };
+const isDBConnected = asyncHandler( async(req, res, next) => {
+  if (status.isConnected !== 'connected')
+    return next(new ErrorResponse('Not connected to database', 503));
+  
+  return next();
+})
+
+module.exports = { connectDB, isDBConnected, status };

@@ -61,7 +61,10 @@ exports.addUser = asyncHandler( async (req, res, next) => {
 // @access  Private
 exports.updateUserById = asyncHandler( async (req, res, next) => {
   
-  const data = await User.findByIdAndUpdate(req.params.id, req.body);
+  const data = await User.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true
+  });
   
   // check if there was an error adding to the database
   if (data.code) {
@@ -94,7 +97,7 @@ exports.deleteUserById = asyncHandler( async (req, res, next) => {
   
   res.status(200).json({
     success: true,
-    message: `Deleted user ${user.username} with id ${user.id}`,
+    message: `Deleted user ${user.name} with id ${user.id}`,
     data: {}
   });
 });
