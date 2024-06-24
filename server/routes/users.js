@@ -9,6 +9,10 @@ const {
 } = require('../controllers/users.js');
 
 const router = express.Router();
+const { isDBConnected, status: dbStatus } = require('../services/dbService');
+
+// Anything below this will use this middleware
+router.use(isDBConnected);
 
 // All Users
 router
