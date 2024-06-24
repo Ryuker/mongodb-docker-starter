@@ -36,6 +36,8 @@ const connectDB = async () => {
 const isDBConnected = asyncHandler( async(req, res, next) => {
   if (status.isConnected !== 'connected')
     return next(new ErrorResponse('Not connected to database', 503));
+  
+  return next();
 })
 
 module.exports = { connectDB, isDBConnected, status };
